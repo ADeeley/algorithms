@@ -32,10 +32,10 @@ void test1() {
 	cout << "Percolates: " << p.percolates() << '\n';
 	cout << "Num of open sites: " << p.numberOfOpenSites() << '\n';
 }
-double runSimulation(int gridSize, int cycles) {
+double simulation(int gridSize, int cycles) {
 	// runs the percolation simulation and returns the average percentage
 	// of open sites required for the grid of size gridSize to percolate.
-	int sum = 0;
+	double sum = 0;
 	Percolation p = Percolation( gridSize );
 		for ( int n = 0; n < cycles; n++ ) {
 			while ( !p.percolates() ) {
@@ -51,19 +51,36 @@ double runSimulation(int gridSize, int cycles) {
 	}
 		return sum / cycles;
 }
-
-int main() {
+void runSimulation() {
 	clock_t start;
 	double duration;
 	double threshold;
 	int cycles = 100;
 	for ( int n = 1; n < cycles; n++ ) {
 		start = clock();
-		threshold = runSimulation( 20, pow(5, n) );
+		threshold = simulation( 20, pow( 5, n ) );
 		duration = ( clock() - start ) / (double)CLOCKS_PER_SEC;
-		cout << "Time taken for " << pow(5, n) << " cycles: " << duration
+		cout << "Time taken for " << pow( 5, n ) << " cycles: " << duration
 			<< " seconds. Average percolation threshold: " << threshold << "%\n";
 	}
-	return 0;
+}
+void testSim() {
+	int gridSize = 5;
+	int cycles = 5;
+	Percolation p = Percolation( gridSize );
+	for ( int n = 0; n < cycles; n++ ) {
+		while ( !p.percolates() ) {
+			p.open( rand() % gridSize, rand() % gridSize );
+			p.fill();
+			//cout << "row:" << row << " col:" << col << '\n';
+			if ( p.percolates() ) break;
+		}
+		p.printGrid();
+		cout << '\n';
+	}
+}
 
+int main() {
+	testSim();
+	return 0;
 }

@@ -27,7 +27,6 @@ void Percolation::open( int row, int col ) {
 	// first open the sector if not already open
 	if (isOpen(row, col))
 		return;
-	grid[row][col].id = grid[row][col].id;
 	grid[row][col].openSector = true;
 	// next, check all sectors NESW of the sector and unite any 
 	// open sectors
@@ -80,8 +79,9 @@ bool Percolation::percolates() {
 	} 
 	return false;
 }
-/*
+
 void Percolation::printGrid() {
+	// full detail printGrid includes open/closed, full/empty and sectorid
 	cout << "printgrid start\n";
 	for ( unsigned int row = 0; row < grid.size(); row++ ) {
 		for ( unsigned int col = 0; col < grid.size(); col++ ) {
@@ -93,7 +93,7 @@ void Percolation::printGrid() {
 	}
 	cout << "\nprintgrid end\n";
 }
-*/
+/*
 void Percolation::printGrid() {
 	for ( unsigned int row = 0; row < grid.size(); row++ ) {
 		for ( unsigned int col = 0; col < grid.size(); col++ ) {
@@ -102,6 +102,7 @@ void Percolation::printGrid() {
 		cout << '\n';
 	}
 }
+*/
 
 void Percolation::unite( int rowA, int colA, int rowB, int colB ) {
 	int pid = grid[rowA][colA].id;
